@@ -1,8 +1,20 @@
 import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev';
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'x-custom-header',
+            value: 'my custom header value',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 async function setup() {
@@ -10,6 +22,7 @@ async function setup() {
     await setupDevPlatform();
   }
 }
+
 setup();
 
 export default nextConfig;
